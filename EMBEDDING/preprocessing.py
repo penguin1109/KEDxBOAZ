@@ -47,8 +47,27 @@ def encoder_input(value, dictionary, tokenize_as_morph = False):
     if tokenize_as_morph:
         value = prepo_like_morphlized(value)
     for seq in value:
-        seq = re.sub(Pattern, """", seq)
+        seq = re.sub(Pattern, "''", seq)
         
+def remove_split(df):
+    df = df.replace("[", "")
+    df = df.replace("]", "")
+    df = df.split("', '")
+    return df
+df['BZ_PPOS_ITM_CTT'] = df['BZ_PPOS_ITM_CTT'].apply(lambda x:remove_split(x))
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+ 
+import re
+ 
+def cleanText(df):
+    text = re.sub('[-=+#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', df)
+    text = text.replace("n", "")
+    text = text.replace(",", "")
+    text = word_tokenize(text)
+ 
+    return text  
+
     
 
 
