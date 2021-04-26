@@ -54,12 +54,25 @@ def remove_split(df):
     df = df.replace("]", "")
     df = df.split("', '")
     return df
+
 df['BZ_PPOS_ITM_CTT'] = df['BZ_PPOS_ITM_CTT'].apply(lambda x:remove_split(x))
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
  
 
 import re
+
+def finalClean(row):
+    clean = []
+    text = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', row)
+    text = text.split(' ')
+    for i in range(len(text)):
+# '\'가 re.sub를 이용해서 특수 문자를 제거를 하려고 할 때마다 생겨났기 때문에
+# 한꺼번에 지워주었다.
+        if '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'in text[i]:
+            text[i] = text[i][:len(text[i])-16]
+        
+    return text
 
 def cleanText(df):
     clean = []
