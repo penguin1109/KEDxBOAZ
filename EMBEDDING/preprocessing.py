@@ -58,16 +58,21 @@ df['BZ_PPOS_ITM_CTT'] = df['BZ_PPOS_ITM_CTT'].apply(lambda x:remove_split(x))
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
  
+
 import re
- 
+
 def cleanText(df):
+    clean = []
     text = re.sub('[-=+#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', df)
     text = text.replace("n", "")
     text = text.replace(",", "")
     text = word_tokenize(text)
- 
-    return text  
-
+    for i in text:
+        if len(i) == 1 or str(i) in list(stopwords):
+            continue
+        else:
+            clean.append(str(i))
+    return clean
     
 
 
