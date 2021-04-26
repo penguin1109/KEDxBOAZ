@@ -30,8 +30,8 @@ class CNNClassifier(tf.keras.Model):
                                           activation = tf.keras.activations.relu,
                                           kernel_constraint = tf.keras.constraints.MaxNorm(max_value = 3.))
     self.fc2 = layers.Dense(units = kargs['output_dimension'],
-                            activation = tf.keras.activations.softmax,
                             kernel_constraint = tf.keras.constraints.MaxNorm(max_value = 3.))
+                            
   
   def call(self, x):
     x = self.embedding(x)
